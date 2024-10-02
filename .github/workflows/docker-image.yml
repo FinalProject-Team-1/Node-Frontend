@@ -33,6 +33,15 @@ jobs:
 
     - name: Build the Docker image
       run: docker build . --tag ${{ env.IMAGE_URI }} || { echo 'Build failed!'; exit 1; }
+    
+    - name: Run Trivy vulnerability scan
+      run: |
+        trivy image \
+        --format table \
+        --severity CRITICAL,HIGH \
+        --vuln-type os,library \
+        --ignore-unfixed \
+        ${{ env.IMAGE_URI }}
 
     - name: Run the Docker container
       run: docker run -d --name ${{ env.CONTAINER_NAME }} -p ${{ env.CONTAINER_PORT }}:${{ env.CONTAINER_PORT }} ${{ env.IMAGE_URI }} || { echo 'Run failed!'; exit 1; }
