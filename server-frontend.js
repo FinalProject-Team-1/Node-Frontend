@@ -63,7 +63,7 @@ app.listen(port, (err) => {
     if (process.env.NODE_ENV === 'production') {
         console.log(`Frontend Server Production Ready. PORT: ${port}`);
     } else {
-        console.log(`Frontend Server Ready. http://127.0.0.1:${port}`);
+        console.log(`Frontend Server Ready. PORT: ${port}`);
     }
 });
 
