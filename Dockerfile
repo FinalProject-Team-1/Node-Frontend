@@ -14,10 +14,15 @@ RUN npm install --production
 # pm2 설치
 RUN npm install -g pm2
 
+# Public 디렉터리 생성 및 권한 설정
+RUN mkdir -p /usr/src/app/public/image && \
+    chown -R node:node /usr/src/app/public && \
+    chmod -R 777 /usr/src/app/public
+
 # PM2 관련 디렉터리 생성 및 권한 설정
 RUN mkdir -p /usr/src/app/.pm2 && \
     chown -R node:node /usr/src/app/.pm2 && \
-    chmod -R 777 /usr/src/app/.pm2  # 권한 문제 해결
+    chmod -R 777 /usr/src/app/.pm2
 
 # 사용자 전환
 USER node
