@@ -122,15 +122,26 @@
         </div>
         <div class="row gy-5 align-items-center">
             <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
-                <% if(typeof user != 'undefined' && user.nickname) { %>
-                <h1 class="display-6 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">환영합니다. <%= user.nickname %>님.</h1>
-                <% } %>
-                <h1 class="display-5 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">안전한 금융, 밝은 내일</h1>
-                <p class="fs-4 mb-4 wow fadeInUp" data-wow-delay="0.5s">고객님의 재정적 목표를 달성할 수 있도록 돕는 믿을 수 있는 파트너가 되어 드리겠습니다. 다양한 금융 서비스와 솔루션을 통해 더 나은 선택을 하세요.</p>
-                <a href="/real-estate?page=1" class="btn btn-primary rounded-pill py-3 px-5 wow fadeInUp" data-wow-delay="0.7s">지금 시작하기</a>
+            <% if(typeof user != 'undefined' && user.nickname) { %>
+              <% if(server_type == 1) {%>
+              <h1 class="display-6 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">환영합니다. <%= user.nickname %>님.</h1>
+              <h1 class="display-5 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">안전한 금융, 밝은 미래</h1>
+              <p class="fs-4 mb-4 wow fadeInUp" data-wow-delay="0.5s">고객님의 재정적 목표를 달성할 수 있도록<br>돕는 믿을 수 있는 파트너가 되어드릴 것입니다.<br>다양한 프리미엄 금융 서비스와 솔루션을 통해<br>더 나은 선택을 하시길 바랍니다.</p>
+              <a href="/real-estate?page=1" class="btn btn-primary rounded-pill py-3 px-5 wow fadeInUp" data-wow-delay="0.7s">지금 시작하기</a>
+              <% } else { %>
+              <h1 class="display-6 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">반갑습니다. <%= user.nickname %>님.</h1>
+              <h1 class="display-5 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">함께하는 금융, 더 나은 내일</h1>
+              <p class="fs-4 mb-4 wow fadeInUp" data-wow-delay="0.5s">고객님의 재정적 목표를 달성하기 위한<br>믿을 수 있는 파트너입니다.<br>다양한 금융 서비스와 솔루션을 통해<br>더 많은 선택지를 제공하겠습니다.</p>
+              <a href="/real-estate?page=1" class="btn btn-primary rounded-pill py-3 px-5 wow fadeInUp" data-wow-delay="0.7s">지금 시작하기</a>
+              <% } %>
+            <% } %>
             </div>
             <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
+                <% if(server_type == 1) {%>
                 <img src="/img/hero-img-1.png" class="img-fluid w-100 h-100" alt="">
+                <% } else { %>
+                <img src="/img/about-1.png" class="img-fluid w-100 h-100" alt="">
+                <% } %>
             </div>
         </div>
     </div>
@@ -142,7 +153,11 @@
             <div class="row g-5">
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="RotateMoveLeft">
+                        <% if(server_type == 1) {%>
                         <img src="/img/about-1.png" class="img-fluid w-100" alt="">
+                        <% } else {%>
+                        <img src="/img/hero-img-1.png" class="img-fluid w-100" alt="">
+                        <% } %>
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">

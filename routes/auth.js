@@ -1,6 +1,7 @@
 let router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const { formatDateString } = require('../utils/format');
+const server_type = process.env.SERVER_TYPE;
 
 // 회원탈퇴
 router.post('/delete', async function (req, res) {
@@ -22,7 +23,7 @@ router.post('/delete', async function (req, res) {
         if (response.ok) {
             req.session.destroy();
             res.clearCookie('uid', { path: '/' });
-            return res.render('index.ejs', { data });
+            return res.render('index.ejs', { data, server_type });
         } else {
             // 회원탈퇴 실패
             return res.redirect('/auth/me');
@@ -176,7 +177,7 @@ router.post('/login', async function (req, res) {
             const token = jwt.sign({ userid }, process.env.JWT_SECRET, { expiresIn: '1h' });
             req.session.user = { userid, token, nickname: data.nickname };
             res.cookie('uid', userid);
-            return res.render('index.ejs', { user: req.session.user, data, csrfToken });  // 로그인 성공
+            return res.render('index.ejs', { user: req.session.user, data, csrfToken, server_type });  // 로그인 성공
         } else {
             return res.render('auth/login.ejs', { data, csrfToken });  // 로그인 실패
         }
@@ -255,7 +256,7 @@ router.post('/sign-up', async function (req, res) {
         if (response.ok) {
             req.session.user = { userid: req.body.userid, nickname: '고객' };
             res.cookie('uid', req.body.userid);
-            return res.render('index.ejs', { user: req.session.user, data, csrfToken });  // 회원가입 완료
+            return res.render('index.ejs', { user: req.session.user, data, csrfToken, server_type });  // 회원가입 완료
         } else {
             return res.render('auth/sign-up.ejs', { data, csrfToken });  // 회원가입 실패
         }
