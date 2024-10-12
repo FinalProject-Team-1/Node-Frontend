@@ -191,6 +191,13 @@ router.post('/photo', upload.single('imagepath'), (req, res) => {
             return res.status(500).json({ alertMsg: '파일 업로드에 실패했습니다.' });
         }
 
+        // 업도르에 성공하면 로컬 파일 삭제
+        fs.unlink(req.file.path, (err) => {
+            if (err) {
+                console.error(`로컬 파일 삭제 중 오류 발생: ${err}`);
+            }
+        });
+
         imagepath = data.Location
         // S3에 업로드 성공 시
         return res.status(200).json({ alertMsg: `${req.file.originalname} 파일을 성공적으로 업로드했습니다.`, location: imagepath });
