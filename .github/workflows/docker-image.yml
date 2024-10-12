@@ -12,7 +12,7 @@ jobs:
     runs-on: self-hosted
 
     env:
-      IMAGE_TAG: v0.0.2
+      IMAGE_TAG: v0.0.1
       IMAGE_NAME: node-frontend
       CONTAINER_NAME: frontend-container
       CONTAINER_PORT: 3000

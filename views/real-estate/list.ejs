@@ -217,7 +217,7 @@
                                             $("#realAddress").text(`${modalData.address}`);
                                             $("#realCity").text(`${modalData.city}`);
                                             $("#realArea").text(`${modalData.area}`);
-                                            $("#realImg").html(`<div style="margin:20px"><img width='430px' height="300px" src='/image/${modalData.imagepath}'></div>`);
+                                            $("#realImg").html(`<div style="margin:20px"><img width='430px' height="300px" src='${modalData.imagepath}'></div>`);
                                             $("#realselling_price").text(`${parseFloat(modalData.selling_price).toLocaleString()}`);
                                             $("#realJeonse_price").text(`${parseFloat(modalData.jeonse_price).toLocaleString()}`);
                                             $("#realFullAddress").text(sumAddress);
@@ -238,7 +238,7 @@
                                             $("#realAddress").text(`${modalData.address}`);
                                             $("#realCity").text(`${modalData.city}`);
                                             $("#realArea").text(`${modalData.area}`);
-                                            $("#realImg").html(`<div style="margin:20px"><img width='430px' height="300px" src='/image/${modalData.imagepath}'></div>`);
+                                            $("#realImg").html(`<div style="margin:20px"><img width='430px' height="300px" src='${modalData.imagepath}'></div>`);
                                             $("#realselling_price").text(`${parseFloat(modalData.selling_price).toLocaleString()}`);
                                             $("#realJeonse_price").text(`${parseFloat(modalData.jeonse_price).toLocaleString()}`);
                                             $("#realFullAddress").text(sumAddress);
@@ -295,11 +295,11 @@
                                 $("#realArea").html(`<div class="row"><div class="mb-3 col-md-5"><input class="form-control" type='text' name='area' value='${area}'></div></div>`);
                                 if (imagepath) {
                                     $("#realImg").html(`
-        <div id="imageContainer" style="position: relative; margin: 20px;">
-            <img id="previewImage" width='430px' height="300px" src='/image/${imagepath}'>
-            <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px;" onclick="deleteImage()">X</button>
-        </div>
-    `);
+                                    <div id="imageContainer" style="position: relative; margin: 20px;">
+                                        <img id="previewImage" width='430px' height="300px" src='${imagepath}'>
+                                        <button type="button" class="btn btn-danger btn-sm" style="position: absolute; top: 5px; right: 5px;" onclick="deleteImage()">X</button>
+                                    </div>
+                                `);
                                 } else {
                                     $("#realImg").html(`<input class="form-control" type='file' name='imagepath'>`);
                                 }

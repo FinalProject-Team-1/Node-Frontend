@@ -3,6 +3,11 @@ const multer = require('multer');
 const fs = require('fs'); // fs.existsSync와 fs.mkdirSync를 사용하여 경로가 없을 때만 폴더를 생성합니다.
 const path = require('path');
 
+// AWS SDK for JavaScript v2는 2024년 9월 8일(Start Date)부터 유지 관리 모드에 들어가며
+// 2025년 9월 7일(End Date)에 지원 종료됩니다.
+// 정보 출처: https://aws.amazon.com/ko/blogs/developer/announcing-end-of-support-for-aws-sdk-for-javascript-v2/
+const AWS = require('aws-sdk');
+
 // /real-estate/
 router.post('/', async function (req, res) {
     return res.status(200).send();
@@ -149,10 +154,47 @@ const upload = multer({ storage });
 
 let imagepath = ''; // 이미지 경로를 저장할 변수
 
+// router.post('/photo', upload.single('imagepath'), (req, res) => {
+//     // 이미지 업로드 시 저장된 파일의 경로를 변수에 저장
+//     imagepath = req.file.originalname; // 실제 이미지 파일의 저장 경로를 변수에 저장
+//     return res.status(200).json({ alertMsg: `${req.file.originalname} 파일을 성공적으로 업로드했습니다.` });
+// });
+
+// AWS S3 설정
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_DEFAULT_REGION
+});
+
 router.post('/photo', upload.single('imagepath'), (req, res) => {
-    // 이미지 업로드 시 저장된 파일의 경로를 변수에 저장
-    imagepath = req.file.originalname; // 실제 이미지 파일의 저장 경로를 변수에 저장
-    return res.status(200).json({ alertMsg: `${req.file.originalname} 파일을 성공적으로 업로드했습니다.` });
+    if (!req.file) {
+        return res.status(400).json({ alertMsg: '이미지 파일을 업로드해주세요.' });
+    }
+
+    // 파일 읽기
+    const fs = require('fs');
+    const fileContent = fs.readFileSync(req.file.path);
+
+    // S3에 업로드할 파일 세부 정보
+    const params = {
+        Bucket: 'team1-public.lion.nyhhs.com/public', // 버킷 이름 및 경로
+        Key: req.file.originalname, // S3에 저장될 파일 이름
+        Body: fileContent,
+        ContentType: req.file.mimetype
+    };
+
+    // S3에 파일 업로드
+    s3.upload(params, (err, data) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ alertMsg: '파일 업로드에 실패했습니다.' });
+        }
+
+        imagepath = data.Location
+        // S3에 업로드 성공 시
+        return res.status(200).json({ alertMsg: `${req.file.originalname} 파일을 성공적으로 업로드했습니다.`, location: imagepath });
+    });
 });
 
 router.post('/save', async function (req, res) {
